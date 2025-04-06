@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng nhập</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3);
+      background-size: 400% 400%;
+      animation: rainbow 10s ease infinite;
+    }
+
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .login-card {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      width: 450px;
+      padding: 40px;
+      text-align: center;
+      margin-bottom: 40px;
+      transition: transform 0.3s;
+    }
+
+    .login-card:hover {
+      transform: scale(1.02);
+    }
+
+    .logo-area {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .logo-container {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: #1a73e8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s ease;
+    }
+
+    .logo {
+      width: 50px;
+      height: 50px;
+      color: white;
+      transition: all 0.5s ease;
+    }
+
+    h2 {
+      color: #202124;
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #5f6368;
+      font-size: 16px;
+      margin-bottom: 30px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #dadce0;
+      border-radius: 4px;
+      font-size: 16px;
+      outline: none;
+      transition: border 0.3s;
+    }
+
+    .input-field:focus {
+      border-color: #1a73e8;
+      box-shadow: 0 0 0 1px #1a73e8;
+    }
+
+    .forgot-link {
+      display: block;
+      text-align: left;
+      color: #1a73e8;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 30px;
+    }
+
+    .forgot-link:hover {
+      text-decoration: underline;
+    }
+
+    .bottom-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .create-account {
+      color: #1a73e8;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .create-account:hover {
+      text-decoration: underline;
+    }
+
+    .next-button {
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 24px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .next-button:hover {
+      background-color: #0d62d1;
+      transform: scale(1.05);
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-top: 1px solid #dadce0;
+      z-index: 10;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-link {
+      color: #5f6368;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .footer-link:hover {
+      text-decoration: underline;
+    }
+
+    /* CSS cho menu dropdown ngôn ngữ */
+    .language-dropdown {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+      z-index: 100;
+    }
+
+    .language-selected {
+      display: flex;
+      align-items: center;
+      padding: 8px 16px;
+      border-radius: 20px;
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      background: #1a73e8;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+
+    .language-dropdown-content {
+      display: none;
+      position: absolute;
+      left: 0;
+      bottom: 100%;
+      margin-bottom: 10px;
+      background-color: white;
+      min-width: 200px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 100;
+      border-radius: 8px;
+      overflow: hidden;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .language-dropdown:hover .language-dropdown-content {
+      display: block;
+    }
+
+    .language-option {
+      padding: 12px 15px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      color: #5f6368;
+    }
+
+    .language-option:hover {
+      background-color: #f1f1f1;
+      transform: translateX(5px);
+    }
+
+    .language-option.active {
+      background: #1a73e8;
+      color: white;
+    }
+
+    .language-flag {
+      width: 24px;
+      height: 18px;
+      margin-right: 10px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      border-radius: 2px;
+      transition: transform 0.3s;
+    }
+
+    .language-option:hover .language-flag {
+      transform: rotate(5deg) scale(1.1);
+    }
+
+    /* Ẩn select mặc định */
+    #language-select {
+      display: none;
+    }
+  </style>
+  <script>
+    function handleSubmit(event) {
+      event.preventDefault();
+      window.location.href = "http://127.0.0.1:3002/index.html";
+    }
+
+    // Function to switch language
+    function switchLanguage(lang) {
+      // Set document language
+      document.documentElement.lang = lang;
+      
+      // Update title based on language
+      document.title = lang === 'vi' ? 'Đăng nhập' : lang === 'en' ? 'Sign In' : lang === 'fr' ? 'Se connecter' : lang === 'es' ? 'Iniciar sesión' : 'Anmelden';
+      
+      // Update hidden select value
+      document.getElementById('language-select').value = lang;
+      
+      // Update selected language display
+      const selectedLangElement = document.getElementById('selected-language');
+      const selectedFlag = document.getElementById('selected-flag');
+      
+      const languages = {
+        'vi': { name: 'Tiếng Việt', flag: 'https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Vietnam.svg' },
+        'en': { name: 'English (United States)', flag: 'https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg' },
+        'fr': { name: 'Français', flag: 'https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg' },
+        'es': { name: 'Español', flag: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Spain.svg' },
+        'de': { name: 'Deutsch', flag: 'https://upload.wikimedia.org/wikipedia/commons/b/ba/Flag_of_Germany.svg' }
+      };
+
+      selectedLangElement.textContent = languages[lang].name;
+      selectedFlag.src = languages[lang].flag;
+      
+      // Update UI for language selection
+      document.querySelectorAll('.language-option').forEach(el => {
+        if (el.getAttribute('data-lang') === lang) {
+          el.classList.add('active');
+        } else {
+          el.classList.remove('active');
+        }
+      });
+      
+      // Hide all language-specific elements
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.style.display = 'none';
+      });
+      
+      // Show only elements for selected language
+      document.querySelectorAll(`[data-lang="${lang}"]`).forEach(el => {
+        el.style.display = '';
+      });
+    }
+
+    // Initialize after DOM loads
+    document.addEventListener('DOMContentLoaded', function() {
+      // Handle language selection from dropdown
+      document.querySelectorAll('.language-option').forEach(el => {
+        el.addEventListener('click', function() {
+          const lang = this.getAttribute('data-lang');
+          switchLanguage(lang);
+        });
+      });
+
+      // Initialize with the default language
+      switchLanguage('vi');
+    });
+  </script>
+</head>
+<body>
+  <!-- Main content -->
+  <div class="login-card">
+    <div class="logo-area">
+      <div class="logo-container">
+        <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+        </svg>
+      </div>
+    </div>
+    
+    <!-- Vietnamese content -->
+    <h2 data-lang="vi">Đăng nhập</h2>
+    <p class="subtitle" data-lang="vi">Sử dụng tài khoản của bạn</p>
+    
+    <!-- English content -->
+    <h2 data-lang="en">Sign In</h2>
+    <p class="subtitle" data-lang="en">Use your account</p>
+
+    <!-- French content -->
+    <h2 data-lang="fr">Se connecter</h2>
+    <p class="subtitle" data-lang="fr">Utilisez votre compte</p>
+
+    <!-- Spanish content -->
+    <h2 data-lang="es">Iniciar sesión</h2>
+    <p class="subtitle" data-lang="es">Usa tu cuenta</p>
+
+    <!-- German content -->
+    <h2 data-lang="de">Anmelden</h2>
+    <p class="subtitle" data-lang="de">Verwenden Sie Ihr Konto</p>
+    
+    <form onsubmit="handleSubmit(event)">
+      <div class="input-group">
+        <input type="email" class="input-field" data-lang="vi" placeholder="Email">
+        <input type="email" class="input-field" data-lang="en" placeholder="Email">
+        <input type="email" class="input-field" data-lang="fr" placeholder="Email">
+        <input type="email" class="input-field" data-lang="es" placeholder="Email">
+        <input type="email" class="input-field" data-lang="de" placeholder="Email">
+      </div>
+      
+      <div class="input-group">
+        <input type="password" class="input-field" data-lang="vi" placeholder="Mật khẩu">
+        <input type="password" class="input-field" data-lang="en" placeholder="Password">
+        <input type="password" class="input-field" data-lang="fr" placeholder="Mot de passe">
+        <input type="password" class="input-field" data-lang="es" placeholder="Contraseña">
+        <input type="password" class="input-field" data-lang="de" placeholder="Passwort">
+      </div>
+      
+      <a href="#" class="forgot-link" data-lang="vi">Quên email?</a>
+      <a href="#" class="forgot-link" data-lang="en">Forgot email?</a>
+      <a href="#" class="forgot-link" data-lang="fr">Mot de passe oublié?</a>
+      <a href="#" class="forgot-link" data-lang="es">¿Olvidaste tu correo electrónico?</a>
+      <a href="#" class="forgot-link" data-lang="de">E-Mail vergessen?</a>
+      
+      <div class="bottom-row">
+        <a href="http://127.0.0.1:3002/index.html" class="create-account" data-lang="vi">Tạo tài khoản</a>
+        <a href="http://127.0.0.1:3002/index.html" class="create-account" data-lang="en">Create account</a>
+        <a href="http://127.0.0.1:3002/index.html" class="create-account" data-lang="fr">Créer un compte</a>
+        <a href="http://127.0.0.1:3002/index.html" class="create-account" data-lang="es">Crear cuenta</a>
+        <a href="http://127.0.0.1:3002/index.html" class="create-account" data-lang="de">Konto erstellen</a>
+        
+        <button type="submit" class="next-button" data-lang="vi">Tiếp theo</button>
+        <button type="submit" class="next-button" data-lang="en">Next</button>
+        <button type="submit" class="next-button" data-lang="fr">Suivant</button>
+        <button type="submit" class="next-button" data-lang="es">Siguiente</button>
+        <button type="submit" class="next-button" data-lang="de">Weiter</button>
+      </div>
+    </form>
+  </div>
+  
+  <div class="footer">
+    <div class="language-dropdown">
+      <!-- Giữ select ẩn để lưu giá trị -->
+      <select id="language-select" class="language-select">
+        <option value="vi">Tiếng Việt</option>
+        <option value="en">English (United States)</option>
+        <option value="fr">Français</option>
+        <option value="es">Español</option>
+        <option value="de">Deutsch</option>
+      </select>
+      
+      <!-- Selected language display với hiệu ứng cầu vồng -->
+      <div class="language-selected">
+        <img id="selected-flag" src="https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Vietnam.svg" alt="VN" class="language-flag">
+        <span id="selected-language">Tiếng Việt</span>
+        <span style="margin-left: 5px;">▼</span>
+      </div>
+      
+      <!-- Dropdown tùy chỉnh -->
+      <div class="language-dropdown-content">
+        <div class="language-option active" data-lang="vi">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Vietnam.svg" alt="VN" class="language-flag">
+          Tiếng Việt
+        </div>
+        <div class="language-option" data-lang="en">
+          <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" alt="US" class="language-flag">
+          English (United States)
+        </div>
+        <div class="language-option" data-lang="fr">
+          <img src="https://upload.wikimedia
